@@ -1,6 +1,8 @@
 'use strict';
 
 // Selectin elements
+const player0element = document.querySelector('.player--0');
+const player1element = document.querySelector('.player--1');
 const score0Element = document.querySelector('#score--0');
 // getElementById is better when using a large number of data as it is a bit faster
 const score1Element = document.getElementById('score--1');
@@ -18,7 +20,9 @@ score0Element.textContent = 0;
 score1Element.textContent = 0;
 diceElement.classList.add('hidden');
 
+const scores = [0, 0];
 let currentScore = 0;
+let activePlayer = 0;
 
 // Rolling dice functionality
 btnRollDice.addEventListener('click', function() {
@@ -33,8 +37,13 @@ btnRollDice.addEventListener('click', function() {
   if (dice !== 1) {
     // Add dice to current  score
     currentScore += dice;
-    current0Element.textContent = currentScore; // CHANGE LATER
+    document.getElementById(`current--${activePlayer}`).textContent = currentScore;
   } else {
     // Switch to next player
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    currentScore = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    player0element.classList.toggle('player--active');
+    player1element.classList.toggle('player--active');
   }
 })
