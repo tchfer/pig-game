@@ -1,6 +1,6 @@
 'use strict';
 
-// Selectin elements
+// Selecting elements
 const player0element = document.querySelector('.player--0');
 const player1element = document.querySelector('.player--1');
 const score0Element = document.querySelector('#score--0');
@@ -14,16 +14,28 @@ const btnNewGame = document.querySelector('.btn--new');
 const btnRollDice = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// Js will convert to string automatically
-// Starting conditions
-score0Element.textContent = 0;
-score1Element.textContent = 0;
-diceElement.classList.add('hidden');
+let scores, currentScore, activePlayer, playing;
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+// Starting conditions
+const init = function () {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  score0Element.textContent = 0;
+  score1Element.textContent = 0;
+  current0Element.textContent = 0;
+  current1Element.textContent = 0;
+
+  diceElement.classList.add('hidden');
+  player0element.classList.remove('player--winner');
+  player1element.classList.remove('player--winner');
+  player0element.classList.add('player--active');
+  player1element.classList.remove('player--active');
+};
+
+init();
 
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -64,7 +76,7 @@ btnHold.addEventListener('click', function () {
       scores[activePlayer];
 
     // 2. Check if player's score is >= 100
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       // Finish the game
       playing = false;
       diceElement.classList.add('hidden');
@@ -80,3 +92,5 @@ btnHold.addEventListener('click', function () {
     }
   }
 });
+
+btnNewGame.addEventListener('click', init);
